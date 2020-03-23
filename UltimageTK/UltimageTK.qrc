@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/UltimageTK">
+        <file>Resources/icon.ico</file>
+        <file>Resources/loading.gif</file>
+    </qresource>
+</RCC>

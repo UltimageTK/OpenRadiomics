@@ -14,7 +14,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+
 
 # Fortran module files
 *.mod
@@ -24,9 +24,16 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
 *.out
 *.app
+.vs/
+LabelAnalysis/
+Libs/Lib_DcmTk/
+Libs/Lib_ITK/
+Libs/Lib_OpenCV/
+UltimageTK/GeneratedFiles/
+UltimageTK/x64/
+bin/

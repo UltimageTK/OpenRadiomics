@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Source Files\ImageWidget">
+      <UniqueIdentifier>{b00bd805-a559-45fc-b55b-281abab79297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DataLoad">
+      <UniqueIdentifier>{fbf686f3-d675-4016-9520-ccbd0be46ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DataManager">
+      <UniqueIdentifier>{86fe761f-e560-4afd-93e4-269ed2b4584b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Draw">
+      <UniqueIdentifier>{a558fec1-05d0-43e6-a37b-0135a6e4ce64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Draw\DrawPen">
+      <UniqueIdentifier>{b94b5f3b-214e-4521-85f2-8fa63f5d3e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Draw\DrawMeasure">
+      <UniqueIdentifier>{1321ec19-194a-46dc-afb9-4022c249fc27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ConfigHelper">
+      <UniqueIdentifier>{190d1db9-6974-43a1-bbe9-f8695ff8c422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SaveThread">
+      <UniqueIdentifier>{b395a33f-8ce8-4e2c-8607-60b74380c430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FormatConvert">
+      <UniqueIdentifier>{986eab91-93b3-4dc2-b1db-9b3ccfbe0e4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Registration">
+      <UniqueIdentifier>{91e20ec2-b857-49e8-a522-774b7d0b313a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HistogramMatching">
+      <UniqueIdentifier>{5fd87fff-3cfa-498e-bb06-e49df3a2771d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AboutDlg">
+      <UniqueIdentifier>{5dc5e97c-b477-4f83-b6ba-474b381c0a4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UltimageTK.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageWidget.cpp">
+      <Filter>Source Files\ImageWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="DataLoad.cpp">
+      <Filter>Source Files\DataLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageDataManager.cpp">
+      <Filter>Source Files\DataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawBase.cpp">
+      <Filter>Source Files\Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawPen.cpp">
+      <Filter>Source Files\Draw\DrawPen</Filter>
+    </ClCompile>
+    <ClCompile Include="AllSettings.cpp">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingColorItem.cpp">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingUI.cpp">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveThread.cpp">
+      <Filter>Source Files\SaveThread</Filter>
+    </ClCompile>
+    <ClCompile Include="FormatConvert.cpp">
+      <Filter>Source Files\FormatConvert</Filter>
+    </ClCompile>
+    <ClCompile Include="Registration.cpp">
+      <Filter>Source Files\Registration</Filter>
+    </ClCompile>
+    <ClCompile Include="HistogramMatching.cpp">
+      <Filter>Source Files\HistogramMatching</Filter>
+    </ClCompile>
+    <ClCompile Include="AboutDlg.cpp">
+      <Filter>Source Files\AboutDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigHelper.cpp">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="UltimageTK.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ImageWidget.h">
+      <Filter>Source Files\ImageWidget</Filter>
+    </QtMoc>
+    <QtMoc Include="DataLoad.h">
+      <Filter>Source Files\DataLoad</Filter>
+    </QtMoc>
+    <QtMoc Include="ImageDataManager.h">
+      <Filter>Source Files\DataManager</Filter>
+    </QtMoc>
+    <QtMoc Include="DrawPen.h">
+      <Filter>Source Files\Draw\DrawPen</Filter>
+    </QtMoc>
+    <QtMoc Include="DrawBase.h">
+      <Filter>Source Files\Draw</Filter>
+    </QtMoc>
+    <QtMoc Include="SettingColorItem.h">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </QtMoc>
+    <QtMoc Include="SettingUI.h">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </QtMoc>
+    <QtMoc Include="SaveThread.h">
+      <Filter>Source Files\SaveThread</Filter>
+    </QtMoc>
+    <QtMoc Include="FormatConvert.h">
+      <Filter>Source Files\FormatConvert</Filter>
+    </QtMoc>
+    <QtMoc Include="Registration.h">
+      <Filter>Source Files\Registration</Filter>
+    </QtMoc>
+    <QtMoc Include="HistogramMatching.h">
+      <Filter>Source Files\HistogramMatching</Filter>
+    </QtMoc>
+    <QtMoc Include="AboutDlg.h">
+      <Filter>Source Files\AboutDlg</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="UltimageTK.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="FormatConvert.ui">
+      <Filter>Source Files\FormatConvert</Filter>
+    </QtUic>
+    <QtUic Include="Registration.ui">
+      <Filter>Source Files\Registration</Filter>
+    </QtUic>
+    <QtUic Include="SettingColorItem.ui">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </QtUic>
+    <QtUic Include="SettingUI.ui">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </QtUic>
+    <QtUic Include="HistogramMatching.ui">
+      <Filter>Source Files\HistogramMatching</Filter>
+    </QtUic>
+    <QtUic Include="AboutDlg.ui">
+      <Filter>Source Files\AboutDlg</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="UltimageTK.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AllSettings.h">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigHelper.h">
+      <Filter>Source Files\ConfigHelper</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UltimageTK.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\bin\icon.ico" />
+    <Image Include="Resources\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ultimagetk_zh.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+    <None Include="ultimagetk_en.ts">
+      <Filter>Translation Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

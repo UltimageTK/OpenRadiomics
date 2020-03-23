@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Open Radiomics</title>
+  <link rel="stylesheet" href="./libs/vue.css">
+
+  <style>
+    nav.app-nav li ul {
+      min-width: 100px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav> 
+    <a href="#/">EN</a>
+    <a href="#/zh-cn/">中文</a>
+  </nav>
+
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      //入口文件改为 /zh-cn/README.md
+      //homepage: 'zh-cn/README.md',
+      auto2top: true,
+      name: '<div class="cf-img-wrapper" width=20% ><img src="./imgs/logo.png" height="65" width="65" class="cf-img"></div><div class="cf-text"  width=80%> <strong>Open Radiomics</strong></div>',
+      //name: 'Open Radiomics',
+      //logo: '/logo.png',
+      repo: 'https://github.com/UltimageTK/OpenRadiomics',
+      themeColor: '#1875BC',
+      //themeColor: '#303030',
+      routerMode: 'hash', // default: 'hash
+      //topMargin: 90, // default: 0
+
+      executeScript: true,
+
+      loadSidebar: true,
+
+      loadNavbar: true,
+
+      maxLevel: 4,
+      subMaxLevel: 4,
+      //coverpage: true,
+
+      // 完整配置参数
+      search: {
+        //maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+        maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+
+        search : [
+          '/',            // => /README.md
+          '/zh-cn/',      // => /zh-cn/README.md
+          // '/zh-cn/introduction.md',
+          // '/zh-cn/imageBrowsing.md',
+          // '/zh-cn/preProcessTools.md',
+          // '/zh-cn/imageSegmentation.md',
+          // '/zh-cn/featureExtract.md',
+          // '/zh-cn/featureSelect.md',
+          // '/zh-cn/buildModel.md',
+          // '/zh-cn/analysisApi.md',
+          // '/zh-cn/radiomicsBasic.md',
+          // '/zh-cn/changeLog.md',
+        ],
+
+        paths: 'auto',
+
+        // 支持本地化
+        placeholder: {
+          '/zh-cn/': '搜索',
+          '/': 'Type to search'
+        },
+
+        // 支持本地化
+        noData: {
+          '/zh-cn/': '找不到结果',
+          '/': 'No Results'
+        },
+
+        // 搜索标题的最大程级, 1 - 6
+        depth: 3,
+      },
+
+
+    }
+  </script>
+  <script src="./libs/docsify.min.js"></script>
+  <script src="./libs/search.js"></script>
+</body>
+
+</html>
