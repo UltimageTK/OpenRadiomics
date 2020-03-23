@@ -18,10 +18,10 @@
 
 <body>
 
-  <nav> 
+  <!-- <nav> 
     <a href="#/">EN</a>
     <a href="#/zh-cn/">中文</a>
-  </nav>
+  </nav> -->
 
   <div id="app"></div>
   <script>
@@ -42,7 +42,7 @@
 
       loadSidebar: true,
 
-      loadNavbar: true,
+      //loadNavbar: true,
 
       maxLevel: 4,
       subMaxLevel: 4,
@@ -55,31 +55,18 @@
 
         search : [
           '/',            // => /README.md
-          '/zh-cn/',      // => /zh-cn/README.md
-          // '/zh-cn/introduction.md',
-          // '/zh-cn/imageBrowsing.md',
-          // '/zh-cn/preProcessTools.md',
-          // '/zh-cn/imageSegmentation.md',
-          // '/zh-cn/featureExtract.md',
-          // '/zh-cn/featureSelect.md',
-          // '/zh-cn/buildModel.md',
-          // '/zh-cn/analysisApi.md',
-          // '/zh-cn/radiomicsBasic.md',
-          // '/zh-cn/changeLog.md',
         ],
 
         paths: 'auto',
 
         // 支持本地化
         placeholder: {
-          '/zh-cn/': '搜索',
-          '/': 'Type to search'
+          '/': '搜索'
         },
 
         // 支持本地化
         noData: {
-          '/zh-cn/': '找不到结果',
-          '/': 'No Results'
+          '/': '找不到结果'
         },
 
         // 搜索标题的最大程级, 1 - 6

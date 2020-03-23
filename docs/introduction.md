@@ -1,22 +1,25 @@
-# Introdution
+# 介绍
+- 这是针对UltImageTK —— 医学影像处理软件的简单介绍。你可以通过它来阅片，同时，我们还提供了大量的基础工具以及强大的影像组学模块。在本文档中，我们也会将当前环节处于影像组学流程中的位置给出示意。
+![影像组学流程](./imgs/pipeline.png)
+- 我们不仅提供你使用这款软件，还对这款软件的基础版本做了开源管理。这将对像你一样的医疗开发者的工作效率有非常大的提升。你可以在[UltimageTK](https://github.com/UltimageTK/OpenRadiomics)拉取源代码。
+- 这款软件的适合人群是医疗工作者、教育和科研工作者。
+## 安装
 
-- This is the simple introdution of the UltImageTK --- a medical image process software. You may read `MR/CT` images with it, meanwhile we provide a variety of basic tools and also a powerful radiomics module.
-- We not only provide the software but also open source the basic version software.This will be a greate assist for you all the medical image developers to improve your work efficiency. You can pull the source code from [UltimageTK](https://github.com/UltimageTK/OpenRadiomics).
-- This software is suitable for medical, educational or scientific staff.
+> - 需要Windows(*`x64 Windows 7 or Windows 10`*) 操作系统。 
+> - 你可以从 [这里](http://www.ultimage.com.cn/download)下载基础版本的UltimageTK软件。
+> - 双击你下载的可执行文件(`UltimageTK-Basic-Installer.exe`)，然后选择自定义的安装路径，等待软件安装结束即可。
 
-## Install
+## 目录
 
-> - The windows(*`x64 Windows 7 or Windows 10`*) system is necessary. 
-> - Download the basic version software from [here](http://www.ultimage.com.cn/download).
-> - Double click the excutable file(`UltimageTK-Basic-Installer.exe`), then choose a custom path and wait for installing finish.
+- 我们将对这套软件进行四个部分的介绍，分别是：`阅片`、`分割`、`工具`及`影像组学模块`。
+- 目录的最后面是非常重要的知识库部分，我们将发布丰富的影像组学相关的基础知识。这部分对新人使用和学习时将发挥非常重要的作用。
 
-## Menus
-
-- We will introduct the tool kit for 4 parts, `Reading`, `Annotation`, `Tools` and `Radiomics`. 
-- An important part at the last of the menus will be a knowledge library, we'll release variaties of basic knowledges about radiomics. This part will play a very important role in the scene used by newcomers.
-
-## Module
-> - `Image browsing module`: support the opening and browsing of Dicom and Nifti format files.
-> - `Image segmentation module`: Support brush or polygon to segment the current image by category, and save the segmentation results locally.
-> - `Image pre-processing module`: including format conversion tool, histogram matching tool, registration and other tools.
-> - `Radiomics module`: including features extraction, feature selection and other functions.
+## 模块功能
+- **影像浏览功能:**
+ > 支持Dicom、Nifti格式文件的打开和浏览。
+- **图像分割功能:**
+ > 支持画笔或多边形对当前图像进行按类别分割，并可以将分割结果保存到本地。
+- **影像预处理功能：**
+ > 包括格式转换功能、直方图匹配、配准等功能。
+- **影像的影像组学处理：**
+ > 包括特征提取、特征选择等功能。
