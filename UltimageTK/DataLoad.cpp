@@ -428,7 +428,7 @@ bool DataLoad::loadImageSeries(const QString &strDirPath, ImageHeaderInfo &stIma
 
         ImageDataManager::getInstance()->setHeaderInfo(stImageHeaderInfo);
         ImageDataManager::getInstance()->setImageSerial(img);
-        bRet = ImageDataManager::getInstance()->loadLabelInfo(strDirPath);
+        bRet = ImageDataManager::getInstance()->loadLabelInfo(strDirPath,IMAGE_TYPE::IMG_DCM);
     }
     catch (itk::ExceptionObject &ex)
     {
@@ -532,7 +532,7 @@ bool DataLoad::loadNiiImage(const QString &strDirPath, ImageHeaderInfo &stImageH
 
         ImageDataManager::getInstance()->setImageSerial(img);
         ImageDataManager::getInstance()->setHeaderInfo(stImageHeaderInfo);
-        bRet = ImageDataManager::getInstance()->loadLabelInfo(strDirPath);
+        bRet = ImageDataManager::getInstance()->loadLabelInfo(strDirPath, IMAGE_TYPE::IMG_NII);
     }
     catch (itk::ExceptionObject &ex)
     {

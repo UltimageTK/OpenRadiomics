@@ -136,7 +136,7 @@ bool ImageDataManager::getImageSerial(ImageType3D* pItkImgSerial)
 *  @output   : 
 *  @return   :
 *********************************************************/
-bool ImageDataManager::loadLabelInfo(QString strPath)
+bool ImageDataManager::loadLabelInfo(QString strPath, IMAGE_TYPE emImageType)
 {
     QDir dir(strPath);
     QString strLsrFileName = strPath + QDir::separator() + dir.dirName() + LABEL_SEQ_RESULT_SUFFIX;
@@ -173,7 +173,18 @@ bool ImageDataManager::loadLabelInfo(QString strPath)
         }
         emit sigColorMapChanged();
     }
-
+    if (m_stAllLabelInfo.stFileInfo.strFilePath.empty())
+    {
+        m_stAllLabelInfo.stFileInfo.strFilePath = m_stImageHeaderInfo.strFilePath.toLocal8Bit().data();
+        m_stAllLabelInfo.stFileInfo.strPatientName = m_stImageHeaderInfo.strPatientName.toLocal8Bit().data();
+        m_stAllLabelInfo.stFileInfo.strPatientAge = m_stImageHeaderInfo.strPatientAge.toLocal8Bit().data();
+        m_stAllLabelInfo.stFileInfo.strPatientSex = m_stImageHeaderInfo.strPatientSex.toLocal8Bit().data();
+        m_stAllLabelInfo.stFileInfo.nFileType = emImageType;
+        m_stAllLabelInfo.stFileInfo.nWidth = m_stImageHeaderInfo.nWidth;
+        m_stAllLabelInfo.stFileInfo.nHeight = m_stImageHeaderInfo.nHeight;
+        m_stAllLabelInfo.stFileInfo.nThickness = m_stImageHeaderInfo.nThickNess;
+        m_stAllLabelInfo.stFileInfo.fSpacing = m_stImageHeaderInfo.fPixelSpacingT;
+    }
     return bRet;
 }
 

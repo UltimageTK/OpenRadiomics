@@ -63,7 +63,7 @@ public:
     void getLabelPpMap(std::map<std::string, int> &mapLabelIndex);
 
     //加载已有的标签结果
-    bool loadLabelInfo(QString strPath);
+    bool loadLabelInfo(QString strPath, IMAGE_TYPE emImageType);
     //获取某一帧的标签信息
     void PolygonShader(VIEW_PLANE emPlane, int nIndex, QPolygon poly,int nColorIndex);
     bool updateLabelVoxel(VIEW_PLANE emPlane, int nIndex, const std::map<int, ExPolygonF> &mapTargets);
