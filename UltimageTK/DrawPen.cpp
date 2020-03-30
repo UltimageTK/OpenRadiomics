@@ -246,6 +246,7 @@ void DrawPen::mousePressEvent(QMouseEvent *event, QPointF ptF, int nValue)
             //²åÖµÒ»ÏÂ
             generateInterpolationPoints(m_pairCurTarget.second);
             m_pairCurTarget.second.bClosed = true;
+            m_pairCurTarget.second.nTargetID = m_pairCurTarget.first;
             m_mapTargets.insert(m_pairCurTarget);
             ImageDataManager::getInstance()->updateLabelInfo(m_emPlane, m_nCurFrameIndex, m_mapTargets);
             m_pairCurTarget.second.reset();

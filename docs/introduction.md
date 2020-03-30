@@ -6,7 +6,7 @@
 ## 安装
 
 > - 需要Windows(*`x64 Windows 7 or Windows 10`*) 操作系统。 
-> - 你可以从 [这里](http://www.ultimage.com.cn/download)下载基础版本的UltimageTK软件。
+> - 你可以从 [这里](https://obs-huay-website.obs.cn-north-4.myhuaweicloud.com/download/UltimageTK_1.0_Installer_x64_win.exe)下载基础版本的UltimageTK软件。
 > - 双击你下载的可执行文件(`UltimageTK-Basic-Installer.exe`)，然后选择自定义的安装路径，等待软件安装结束即可。
 
 ## 目录

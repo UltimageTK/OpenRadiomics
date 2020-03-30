@@ -143,6 +143,23 @@ bool ImageDataManager::loadLabelInfo(QString strPath, IMAGE_TYPE emImageType)
 
     //加载的时候先清空
     m_stAllLabelInfo = LabelAnalysis::AllLabelInfo();
+    
+    LabelAnalysis::FileInfo stFileInfo;
+    stFileInfo.strFilePath = m_stImageHeaderInfo.strFilePath.toLocal8Bit().data();
+    stFileInfo.strPatientName = m_stImageHeaderInfo.strPatientName.toLocal8Bit().data();
+    stFileInfo.strPatientAge = m_stImageHeaderInfo.strPatientAge.toLocal8Bit().data();
+    stFileInfo.strPatientSex = m_stImageHeaderInfo.strPatientSex.toLocal8Bit().data();
+    stFileInfo.nFileType = emImageType;
+    stFileInfo.nWidth = m_stImageHeaderInfo.nWidth;
+    stFileInfo.nHeight = m_stImageHeaderInfo.nHeight;
+    stFileInfo.nThickness = m_stImageHeaderInfo.nThickNess;
+    stFileInfo.fSpacing = m_stImageHeaderInfo.fPixelSpacingT;
+
+    if (m_stAllLabelInfo.stFileInfo.strFilePath.empty())
+    {
+        m_stAllLabelInfo.stFileInfo = stFileInfo;
+    }
+
     QFileInfo fileInfo(strLsrFileName);
     if (!fileInfo.exists())
     {
@@ -175,15 +192,7 @@ bool ImageDataManager::loadLabelInfo(QString strPath, IMAGE_TYPE emImageType)
     }
     if (m_stAllLabelInfo.stFileInfo.strFilePath.empty())
     {
-        m_stAllLabelInfo.stFileInfo.strFilePath = m_stImageHeaderInfo.strFilePath.toLocal8Bit().data();
-        m_stAllLabelInfo.stFileInfo.strPatientName = m_stImageHeaderInfo.strPatientName.toLocal8Bit().data();
-        m_stAllLabelInfo.stFileInfo.strPatientAge = m_stImageHeaderInfo.strPatientAge.toLocal8Bit().data();
-        m_stAllLabelInfo.stFileInfo.strPatientSex = m_stImageHeaderInfo.strPatientSex.toLocal8Bit().data();
-        m_stAllLabelInfo.stFileInfo.nFileType = emImageType;
-        m_stAllLabelInfo.stFileInfo.nWidth = m_stImageHeaderInfo.nWidth;
-        m_stAllLabelInfo.stFileInfo.nHeight = m_stImageHeaderInfo.nHeight;
-        m_stAllLabelInfo.stFileInfo.nThickness = m_stImageHeaderInfo.nThickNess;
-        m_stAllLabelInfo.stFileInfo.fSpacing = m_stImageHeaderInfo.fPixelSpacingT;
+        m_stAllLabelInfo.stFileInfo = stFileInfo;
     }
     return bRet;
 }
