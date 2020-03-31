@@ -1,4 +1,4 @@
-## [1.0.0](https://github.com/QingWei-Li/docsify/compare/v3.7.3...v4.0.0)  (2020-03-19)
+## 1.0.0  (2020-03-19)
 
 > 发布初版
 
