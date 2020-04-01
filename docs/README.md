@@ -1,13 +1,7 @@
 
 #  Open Radiomics
 
-> 主要贡献作者：
-
-> - 软件工程师：张清华
-
-> - 算法工程师：徐强
-
-> - 技术顾问：李志成博士
+> 项目负责人：**`李志成博士`** **`李凌博士`**
 
 
 在[open Radiomics Documentaion](https://ultimagetk.github.io/OpenRadiomics/)中你可以查看具体的介绍。
