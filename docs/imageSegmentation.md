@@ -1,34 +1,34 @@
-# 图像分割
+# Image Segmentation
 <center>
 
-![影像组学流程_图像采集](./imgs/pipeline_2.png)
+![process_of_radiomics_image_acquisition](./imgs/pipeline_2.png)
 
 </center>
 
-- 图像分割是指对感兴趣区部位的分割，也就是在影像图像上勾画出感兴趣区域，从而针对这一特定区域计算出影像组学特征。由于图像分割是影像组学特征提取、特征选择和建立模型的前提条件，因此其重要性是不言而喻的。UltImageTK也在这部分为用户准备了非常丰富和细致的操作体验。
+- Image segmentation refers to split the regions of interest out from the whole image. The radiomics features can be calculated from the regions of interest which sketched out from the medical images. Image segmentation is an extremely part, because it is the prerequisite of "feature extract," "feature select," and "model building." In this part, UltImageTK provides a rich and detailed experience for users.
 
-## 标签值配置
-- 用户可根据实际情况，在此处![](./imgs/setting_color.png)自定义分割画笔的颜色和名称。
+## Tag Configuration
+-  Users can customize the color and name of the segmentation brush here. ![](./imgs/setting_color.png)
 
-## 图像分割
-- 当前版本中，为用户提供了 **`多边形`** 和 **`画笔`** 两种分割目标区域的方式(`*在以后的版本中，我们将会添加更多的标注方式，以便用户能有更灵活的选择`)。
+## Perform a Segmentation
+- In this current version, UltImageTK provides two tools, **`polygon`** and **`brush`**, to divide the target area. (`*We will update more flexible annotation tools in later versions`).
 
-> - 多边形标注：用户可以逐个点标注相对规则的感兴趣区域(ROI)
-> - 画笔标注：对于不规则区域，用户可以使用画笔，移动鼠标进行连续曲线绘制，描绘出感兴趣区域
-
-
-- 绘制完成后，用户可以通过调节已标注区域的透明度![](./imgs/transparancy.png)来方便的观察已标注区域和其原始数据之间的差异，对于调整标注区域是非常有帮助的。
-
-- 修改已标注好的ROI
-   > * 对于多边形和画笔标注好的ROI，你可以直接用鼠标左键，选中这个图形目标，就可以拖动它的位置
-   > * 如果需要调节已绘制的目标形状，可以通过鼠标左键选中并调节需要改变位置的点，以此来调整已绘制好的ROI形状
-
-- 查看ROI参数
-   > * 绘制好ROI后，你可以用鼠标左键选中它，此时在当前视图的左上角，会出现这个形状的相关信息，描述了这个区域的宽、高以及面积。这些参数可以给使用者一些提示，方便的了解到该ROI的几何信息。
+> - Polygon Annotation: Users can mark out regular regions of interest (ROI) point by point.
+> - Brush Annotation: For the irregular ROI, users can mark them out by drawing continuous curves with the rush.
 
 
+- Once the annotation has done, users can adjust the transparency of the marked area ![](./imgs/transparancy.png) to compare the marked area with the original image. This helps adjust the marked area.
 
-## 分割结果保存
-- 标注完成后你需要点击左侧的保存![](./imgs/save_btn.png)按钮，以保存已经绘制的结果，这份结果将会被保存在你的目录下，以"*.lsr"的文件格式存储，这是我们自己开发的文件格式，你可以在[LRS数据结构介绍](zh-cn/analysisApi)中查看其结构。
-- 保存完成后，你将可以在下次打开这个文件（位置未变动）时仍然能看到标注结果。
-- 如果在保存完成后，你想将标注的结果导出，UltImageTK提供了3种导出类型，分别是Dicom、Nifit以及LSR格式，你可以任意选择将其导出到自定义的位置。
+- Modify the Marked ROI
+   > * For the ROI annotated by polygon or brush, left-click to select the graphic and drag it to another position.
+   > * To adjust the shape of the ROI, left-click to select the graphic and drag the position of points that need to be adjusted.
+
+- Check the Parameters of ROI
+   > * After annotating the ROI, select the graphic, and parameters of the shape will be shown in the upper left corner of the current view. Users will find some useful information such as the width, height, and area of the ROI to help them understand the geometric property clearly.
+
+
+
+## Save the Result of Segmentation
+- After annotating the ROI, you need to save the result of segmentation by clicking "saving" button ![](./imgs/save_btn.png), the result will stored in your customized path as "\*.lsr" format. "\*.lsr" is a special format developed by us, users can confirm the structure of the "\*.lsr" file in [Introduction to LRS Data Structure](zh-cn/analysisApi).
+- After saving, the annotation graphic will be loaded when you re-open this file (do not move the "\*.lsr" file to another path).
+- After saving, you can choose to export the result of segmentation from UltImageTK in three formats, Dicom, Nifit, or LSR. You can customize the storage path as well.

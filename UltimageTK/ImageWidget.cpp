@@ -824,6 +824,15 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *event)
                 break;
             }
 
+            if ((event->buttons() & Qt::LeftButton) == Qt::LeftButton)
+            {
+                m_nCurValue = nValue;
+                setCurCenterPos(ptCurPos);
+                m_stDrawPen.mouseMoveEvent(event, ptF, nValue);
+                update();
+            }
+
+
         }
         catch(...)
         {

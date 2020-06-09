@@ -296,17 +296,17 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QWidget" name="widget9" native="true">
+            <widget class="QWidget" name="widget3D" native="true">
              <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0">
               <item>
-               <widget class="QLabel" name="labelTransversePlane_2">
+               <widget class="QLabel" name="label3DPlane">
                 <property name="text">
                  <string>3D 视图</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QWidget" name="vtkWidget" native="true"/>
+               <widget class="Rebuild3D" name="vtkWidget" native="true"/>
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_15">
@@ -1276,6 +1276,12 @@
    <class>ImageWidget</class>
    <extends>QWidget</extends>
    <header>ImageWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Rebuild3D</class>
+   <extends>QWidget</extends>
+   <header>Rebuild3D.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

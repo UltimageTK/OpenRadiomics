@@ -1,8 +1,8 @@
-# 影像组学基础知识
+# Basic Knowledge of Radiomics
 
-> 本模块将构建一个影像组学的知识库，为读者提供基础知识的普及，后期也会对学界关注的问题予以一些解答和讲解。
+> This module will build a knowledge base with some basic introduction of radiomics for our readers. Later will also give some answers and explanations to the hotspots among the academic community.
 
 
-> **`敬请期待.`**
+> **`To be continued...`**
 
 

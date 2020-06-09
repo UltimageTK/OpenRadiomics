@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-	QString strTitle = "UltimageTK v1.0.1";
+	QString strTitle = "UltimageTK v1.1.1";
 
 	w.setWindowTitle(strTitle);
     w.show();

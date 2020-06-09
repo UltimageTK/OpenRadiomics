@@ -446,6 +446,109 @@ bool ImageDataManager::getAllLabelInfo(LabelAnalysis::AllLabelInfo &stAllLabelIn
     return true;
 }
 
+void points2Lines(QVector<QPointF>& vecPts, QList<ExLineF> &lstLines , std::string strTargetName, bool bNeedT)
+{
+    for (int i = 0 ; i <vecPts.size();i+=2)
+    {
+        ExLineF stExLineF;
+        stExLineF.strTargetName = strTargetName;
+        if (bNeedT)
+        {
+            stExLineF.setP1(QPointF(vecPts[i].ry(), vecPts[i].rx()));
+            stExLineF.setP2(QPointF(vecPts[i + 1].ry(), vecPts[i + 1].rx()));
+        }
+        else
+        {
+            stExLineF.setP1(vecPts[i]);
+            stExLineF.setP2(vecPts[i + 1]);
+        }
+
+
+        lstLines.append(stExLineF);
+    }
+}
+
+bool cmp(QPointF a, QPointF b)
+{
+    return (a.x()<b.x()||a.y()<b.y());
+}
+
+void ImageDataManager::getIntersectionLines(const std::list<LabelAnalysis::Vertex> &lstVertex, double dShowIndex, QList<ExLineF> &lstLines, std::string strTargetName,
+ double dCurFrame, bool bWH, bool bNeedT)
+{
+    //构造出多边形
+    QPolygonF polyBase;
+    if (lstVertex.size() > 0)
+    {
+        for each (auto pt in lstVertex)
+        {
+            polyBase.append(QPointF(pt.fX, pt.fY));
+        }
+        polyBase.append(QPointF(lstVertex.front().fX, lstVertex.front().fY));
+    }
+
+    QPolygonF polyRect;
+    //构造出分割线矩形
+    if (bWH)
+    {
+        polyRect.append(QPointF(0.0, 1.0));
+        polyRect.append(QPointF(0.0, dCurFrame));
+        polyRect.append(QPointF(1.0, dCurFrame));
+        polyRect.append(QPointF(1.0, 1.0));
+        polyRect.append(QPointF(0.0, 1.0));
+    }
+    else
+    {
+        polyRect.append(QPointF(0.0, 0.0));
+        polyRect.append(QPointF(dCurFrame, 0.0));
+        polyRect.append(QPointF(dCurFrame, 1.0));
+        polyRect.append(QPointF(0.0, 1.0));
+        polyRect.append(QPointF(0.0, 0.0));
+    }
+    QPolygonF polyInsect = polyBase.intersected(polyRect);
+
+
+    QVector<QPointF> vecPts;
+    for each (auto pt in polyInsect)
+    {
+        if (bWH)
+        {
+            if (abs(pt.y() - dCurFrame) < 0.00001)
+            {
+                vecPts.append(QPointF(pt.x(), dShowIndex));
+            }
+        }
+        else
+        {
+            if (abs(pt.x() - dCurFrame) < 0.00001)
+            {
+                vecPts.append(QPointF(dShowIndex, pt.y()));
+            }
+        }
+    }
+
+    //转成线段
+    if (vecPts.size()>1)
+    {
+        qSort(vecPts.begin(), vecPts.end(), cmp);
+        if (vecPts.size() % 2 == 1)
+        {
+            if (vecPts[0]== vecPts[1])
+            {
+                vecPts.pop_front();//去掉重复的起点
+            }
+            else
+            {
+                vecPts.pop_back();//去掉重复的起点
+            }
+        }
+        if (!vecPts.empty())
+        {
+            points2Lines(vecPts, lstLines, strTargetName, bNeedT);
+        }
+    }
+}
+
 /******************************************************** 
 *  @function : getTargetWH
 *  @brief    : 获取目标在别的页面上的投影出的情况
@@ -453,67 +556,71 @@ bool ImageDataManager::getAllLabelInfo(LabelAnalysis::AllLabelInfo &stAllLabelIn
 *  @output   : 
 *  @return   :
 *********************************************************/
-void ImageDataManager::getTargetWH(const std::map<int, std::map<int, LabelAnalysis::Target>> &mapTargets
+
+
+void ImageDataManager::getTargetWH(const std::map<int, std::map<int, LabelAnalysis::Target>> &mapTargets, double dCurFrame
     , QList<ExLineF> &lstWHTargets, int nTotalIndex, bool bWH, bool bNeedT)
 {
+
     for each (auto var in mapTargets)
     {
         for each (auto tgt in var.second)
         {
-            if (tgt.second.lstVertex.size() > 0)
-            {
-                LabelAnalysis::Vertex stVertex = tgt.second.lstVertex.front();
-                QRectF rectF(stVertex.fX, stVertex.fY, 0.0f, 0.0f);
-                for each (auto pt in tgt.second.lstVertex)
-                {
-                    if (pt.fX < rectF.left())
-                    {
-                        rectF.setLeft(pt.fX);
-                    }
-                    if (pt.fX > rectF.right())
-                    {
-                        rectF.setRight(pt.fX);
-                    }
-                    if (pt.fY < rectF.top())
-                    {
-                        rectF.setTop(pt.fY);
-                    }
-                    if (pt.fY > rectF.bottom())
-                    {
-                        rectF.setBottom(pt.fY);
-                    }
-                }
-                ExLineF stExLineF;
-                stExLineF.strTargetName = tgt.second.strTargetName;
-                if (bWH)//宽
-                {
-                    if (bNeedT)
-                    {
-                        stExLineF.setP1(QPointF((float)var.first / nTotalIndex, rectF.left()));
-                        stExLineF.setP2(QPointF((float)var.first / nTotalIndex, rectF.right()));
-                    }
-                    else
-                    {
-                        stExLineF.setP1(QPointF(rectF.left(), (float)var.first / nTotalIndex));
-                        stExLineF.setP2(QPointF(rectF.right(), (float)var.first / nTotalIndex));
-                    }
-                }
-                else//高
-                {
-                    if (bNeedT)
-                    {
-                        stExLineF.setP1(QPointF(rectF.top(), (float)var.first / nTotalIndex));
-                        stExLineF.setP2(QPointF(rectF.bottom(), (float)var.first / nTotalIndex));
-                    }
-                    else
-                    {
-                        stExLineF.setP1(QPointF((float)var.first / nTotalIndex, rectF.top()));
-                        stExLineF.setP2(QPointF((float)var.first / nTotalIndex, rectF.bottom()));
-                    }
 
-                }
-                lstWHTargets.push_back(stExLineF);
-            }
+            getIntersectionLines(tgt.second.lstVertex, (double)var.first / nTotalIndex, lstWHTargets, tgt.second.strTargetName, dCurFrame, bWH, bNeedT);
+            //if (tgt.second.lstVertex.size() > 0)
+            //{
+            //    LabelAnalysis::Vertex stVertex = tgt.second.lstVertex.front();
+            //    QRectF rectF(stVertex.fX, stVertex.fY, 0.0f, 0.0f);
+            //    for each (auto pt in tgt.second.lstVertex)
+            //    {
+            //        if (pt.fX < rectF.left())
+            //        {
+            //            rectF.setLeft(pt.fX);
+            //        }
+            //        if (pt.fX > rectF.right())
+            //        {
+            //            rectF.setRight(pt.fX);
+            //        }
+            //        if (pt.fY < rectF.top())
+            //        {
+            //            rectF.setTop(pt.fY);
+            //        }
+            //        if (pt.fY > rectF.bottom())
+            //        {
+            //            rectF.setBottom(pt.fY);
+            //        }
+            //    }
+            //    ExLineF stExLineF;
+            //    stExLineF.strTargetName = tgt.second.strTargetName;
+            //    if (bWH)//宽
+            //    {
+            //        if (bNeedT)
+            //        {
+            //            stExLineF.setP1(QPointF((float)var.first / nTotalIndex, rectF.left()));
+            //            stExLineF.setP2(QPointF((float)var.first / nTotalIndex, rectF.right()));
+            //        }
+            //        else
+            //        {
+            //            stExLineF.setP1(QPointF(rectF.left(), (float)var.first / nTotalIndex));
+            //            stExLineF.setP2(QPointF(rectF.right(), (float)var.first / nTotalIndex));
+            //        }
+            //    }
+            //    else//高
+            //    {
+            //        if (bNeedT)
+            //        {
+            //            stExLineF.setP1(QPointF(rectF.top(), (float)var.first / nTotalIndex));
+            //            stExLineF.setP2(QPointF(rectF.bottom(), (float)var.first / nTotalIndex));
+            //        }
+            //        else
+            //        {
+            //            stExLineF.setP1(QPointF((float)var.first / nTotalIndex, rectF.top()));
+            //            stExLineF.setP2(QPointF((float)var.first / nTotalIndex, rectF.bottom()));
+            //        }
+            //    }
+            //    lstWHTargets.push_back(stExLineF);
+            // }
         }
     }
 }
@@ -525,24 +632,24 @@ void ImageDataManager::getTargetWH(const std::map<int, std::map<int, LabelAnalys
 *  @output   : 
 *  @return   :
 *********************************************************/
-bool ImageDataManager::getOtherPlaneTargetWH(VIEW_PLANE emCurPlane, QList<ExLineF> &mapWTargets, QList<ExLineF> &mapHTargets)
+bool ImageDataManager::getOtherPlaneTargetWH(VIEW_PLANE emCurPlane, QList<ExLineF> &mapWTargets, QList<ExLineF> &mapHTargets, int nCurFrame)
 {
     QMutexLocker locker(&m_muxLabel);
 
     switch (emCurPlane)
     {
     case SagittalPlane:
-        getTargetWH(m_stAllLabelInfo.mapCPTargets, mapHTargets, m_stImageHeaderInfo.nHeight, TARGET_H);//OK
-        getTargetWH(m_stAllLabelInfo.mapTPTargets, mapWTargets, m_stImageHeaderInfo.nThickNess, TARGET_H, true);//OK
+        getTargetWH(m_stAllLabelInfo.mapCPTargets, (double)nCurFrame/ m_stImageHeaderInfo.nWidth, mapHTargets, m_stImageHeaderInfo.nHeight, TARGET_H);//OK
+        getTargetWH(m_stAllLabelInfo.mapTPTargets, (double)nCurFrame / m_stImageHeaderInfo.nWidth, mapWTargets, m_stImageHeaderInfo.nThickNess, TARGET_H, true);//OK
         //m_stAllLabelInfo.mapSPTargets;
         break;
     case CoronalPlane:
-        getTargetWH(m_stAllLabelInfo.mapSPTargets, mapHTargets, m_stImageHeaderInfo.nWidth, TARGET_H);
-        getTargetWH(m_stAllLabelInfo.mapTPTargets, mapWTargets, m_stImageHeaderInfo.nThickNess, TARGET_W);//OK
+        getTargetWH(m_stAllLabelInfo.mapSPTargets, (double)nCurFrame / m_stImageHeaderInfo.nHeight, mapHTargets, m_stImageHeaderInfo.nWidth, TARGET_H);
+        getTargetWH(m_stAllLabelInfo.mapTPTargets, (double)nCurFrame / m_stImageHeaderInfo.nHeight, mapWTargets, m_stImageHeaderInfo.nThickNess, TARGET_W);//OK
         break;
     case TransversePlane:
-        getTargetWH(m_stAllLabelInfo.mapSPTargets, mapHTargets, m_stImageHeaderInfo.nWidth, TARGET_W, true);
-        getTargetWH(m_stAllLabelInfo.mapCPTargets, mapWTargets, m_stImageHeaderInfo.nHeight, TARGET_W);
+        getTargetWH(m_stAllLabelInfo.mapSPTargets, (double)nCurFrame / m_stImageHeaderInfo.nThickNess, mapHTargets, m_stImageHeaderInfo.nWidth, TARGET_W, true);
+        getTargetWH(m_stAllLabelInfo.mapCPTargets, (double)nCurFrame / m_stImageHeaderInfo.nThickNess, mapWTargets, m_stImageHeaderInfo.nHeight, TARGET_W);
         break;
     default:
         return false;
@@ -575,24 +682,6 @@ bool ImageDataManager::saveLabelInfo()
 
     
     bool bRet = LabelAnalysis::WriteLabelFile(strLsrFileName.toLocal8Bit().data(), m_stAllLabelInfo);
-    /*typedef  itk::ImageFileWriter<ImageType3D> WriterType;
-    WriterType::Pointer writer = WriterType::New();
-    writer->SetFileName(".\\a.nrrd");
-    writer->SetInput(m_pItkNrrdSerial);
-    WriterType::Pointer writer2 = WriterType::New();
-    writer2->SetFileName(".\\a.nii");
-    writer2->SetInput(m_pItkNiiSerial);
-    try
-    {
-        writer->Update();
-        writer2->Update();
-    }
-    catch (itk::ExceptionObject &ex)
-    {
-        std::string str(ex.what());
-        std::cout << ex;
-        return false;
-    }*/
     return bRet;
     
 }
@@ -615,66 +704,6 @@ bool ImageDataManager::getImageInfo(ImageType3D::Pointer &pImage)
     pImage->Allocate();
     pImage->FillBuffer(itk::NumericTraits< ImageType3D::PixelType >::Zero);
     pImage->CopyInformation(m_pItkImgSerial);
-
-    return true;
-}
-
-/******************************************************** 
-*  @function : getNrrdImage
-*  @brief    : 已抛弃
-*  @input    : 
-*  @output   : 
-*  @return   :
-*********************************************************/
-bool ImageDataManager::getNrrdImage(ImageType3D::Pointer &pNrrdImage)
-{
-    if (m_pItkNrrdSerial==nullptr)
-    {
-        return false;
-    }
-    else
-    {
-        if (pNrrdImage == nullptr)
-        {
-            pNrrdImage = ImageType3D::New();
-        }
-        ImageType3D::RegionType region(m_pItkNrrdSerial->GetBufferedRegion());
-        pNrrdImage->SetRegions(region);
-        pNrrdImage->Allocate();
-        //pNrrdImage->FillBuffer(itk::NumericTraits< ImageType3D::PixelType >::Zero);
-        pNrrdImage->Graft(m_pItkNrrdSerial);
-    }
-    return true;
-}
-
-/******************************************************** 
-*  @function : getNiiImage
-*  @brief    : 已抛弃
-*  @input    : 
-*  @output   : 
-*  @return   :
-*********************************************************/
-bool ImageDataManager::getNiiImage(ImageType3D::Pointer &pNiiImage)
-{
-    if (m_pItkNiiSerial == nullptr)
-    {
-        return false;
-    }
-    else
-    {
-        if (pNiiImage == nullptr)
-        {
-            pNiiImage = ImageType3D::New();
-        }
-        ImageType3D::RegionType region(m_pItkNiiSerial->GetBufferedRegion());
-        pNiiImage->SetRegions(region);
-        pNiiImage->Allocate();
-        //pNiiImage->CopyInformation(m_pItkNiiSerial);
-        //pNiiImage->FillBuffer(itk::NumericTraits< ImageType3D::PixelType >::Zero);
-        pNiiImage->Graft(m_pItkNiiSerial);
-        //pNiiImage = m_pItkNiiSerial;
-        //pNiiImage->CopyInformation(m_pItkVtkShowSerial);
-    }
 
     return true;
 }

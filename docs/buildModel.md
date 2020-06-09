@@ -1,9 +1,9 @@
-# 建立模型
+# Model Building 
 
 <center>
 
-![影像组学流程_图像采集](./imgs/pipeline_5.png)
+![process_of_radiomics_model_building](./imgs/pipeline_5.png)
 
 </center>
 
-* **`该模块在当前版本种暂时未上线，敬请期待！`**
+* **`This module has not launched in the current version yet. Coming Soon!`**

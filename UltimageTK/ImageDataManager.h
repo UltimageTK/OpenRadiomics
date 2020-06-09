@@ -75,19 +75,17 @@ public:
     bool getAllLabelInfo(LabelAnalysis::AllLabelInfo &stAllLabelInfo);
 
     //获取其他界面的目标宽高，Target里面只存两个点连成线段
-    void getTargetWH(const std::map<int, std::map<int, LabelAnalysis::Target>> &mapTargets,
+    void ImageDataManager::getIntersectionLines(const std::list<LabelAnalysis::Vertex> &lstVertex, double dShowIndex, QList<ExLineF> &lstLines, std::string strTargetName,
+        double dCurFrame, bool bWH, bool bNeedT);
+    void getTargetWH(const std::map<int, std::map<int, LabelAnalysis::Target>> &mapTargets, double dCurFrame,
         QList<ExLineF> &lstWHTargets,int nTotalIndex, bool bWH, bool bNeedT = false);//W->true H ->false,需不需要转置
-    bool getOtherPlaneTargetWH(VIEW_PLANE emCurPlane, QList<ExLineF> &lstWTargets, QList<ExLineF> &lstHTargets);
+    bool getOtherPlaneTargetWH(VIEW_PLANE emCurPlane, QList<ExLineF> &lstWTargets, QList<ExLineF> &lstHTargets, int nCurFrame);
 
     //保存结果
     bool saveLabelInfo();
 
     //拷贝文件头信息
     bool getImageInfo(ImageType3D::Pointer &pImage);
-
-    //获取这些类型转换的图片，已被抛弃使用，等3D模块完善好就可以删掉
-    bool getNrrdImage(ImageType3D::Pointer &pNrrdImage);
-    bool getNiiImage(ImageType3D::Pointer &pNiiImage);
 signals:
     void sigColorMapChanged();
 

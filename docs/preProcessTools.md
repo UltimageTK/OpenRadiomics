@@ -1,27 +1,26 @@
-# 预处理工具
+# Image Preprocessing Tools
 
-![影像组学流程_图像采集](./imgs/pipeline_1.png)
+![process_of_radiomics_image_acquisition](./imgs/pipeline_1.png)
 
-UltImageTK提供了很多常用的工具，包括多种格式转换、配准、直方图匹配等。为图像分割和影像组学的其他部分打好基础，此模块也可算作图像采集的部分。在数据标注领域，通常称之为“清洗”，我们将不规范的数据或者不能直接使用的数据成为“脏数据”，脏数据到可直接用于使用的数据的处理过程，就称之为“清洗数据”。
+Several useful preprocessing tools are provided in UltImageTK, such as format conversion, image registration, and histogram matching, etc. These can be considered as a part of the image acquisition module, which prepared the images for other modules such as image splitting and radiomics. The preprocessing procedure is often known as "cleaning" in the field of data labeling. "Dirty data" means some data can not be used directly because there are not meet specifications. The procedure of making "dirty data" work called "data cleaning."
 
-## 格式转换
-- UltimageTK提供多样的格式转换以解决用户在使用医学数据过程中在格式上遇到的诸多不便
-    - `Dicom格式图片转换为Nifti格式图片`
-    - Dicom格式图片转换为Nrrd格式图片
-    - Nifti格式图片和Nrrd格式图片互相转换
+## Format Conversion
+- UltimageTK provides a variety of format outputs to help users overcome the inconvenience when operating medical data.
+    - `Dicom to Nifti`
+    - Dicom to Nrrd
+    - Nifti to and from Nrrd
 
-    UltimageTK中的格式转换操作流程非常简单，只要在
+    It is easy to convert image format in UltimageTK, just simply choose your preferred format in the drop-down menu:
     <center>
 
     ![](./imgs/pro_format.png)
     
     </center>
-    中选择某种需要转换的方式即可。
 
-## 配准
+## Image Registration
 
-- 不同设备或同一设备不同时期采集的影像，很可能出现同一造影位置在影像上位置的偏差，用户可通过配准的方式让其造影部分在图像中的像素位置趋于一致。
-- 在预处理菜单中找到配准选项，设置好“参数设置”组中的各项参数，选择参考图像和待配准图像，设置好输出路径，即可开始计算。右侧结果参数会给出配准结果参数，如误差、匹配矩阵等。如果配准过程中出现错误同样会在结果参数栏中显示。
+- Deviations (the targets not in the same place on each image) may occur in the images acquired by different equipment, even by the same equipment, but acquired at different periods. Users could fix the deviation as much as possible by using the function "Image Registration."
+- Click "Image Registration" in the "Preprocessing" menu. After setting each appropriate parameters, and choosing the `Reference Image`, `Matching Image`, `Output Path`, click "Calculate." The results will show on the right side, such as error, matching matrix, etc. If something goes wrong during the registration process, an alert will also occur on the right side. 
 
 <center>
 
@@ -29,12 +28,12 @@ UltImageTK提供了很多常用的工具，包括多种格式转换、配准、�
 
 </center>
 
->   - *`匹配图像`即为将要调整的影像*
+>   - *`Matching Image` is the image which needs to be adjusted*
 
 
-## 直方图匹配
-- 由于设备采集病患影像时可能出现一些参数偏差，用户可以提供参考图像来矫正当前需要浏览的影像的色彩分布。直方图匹配功能提供了这种实现方式。
-- 用户可以在预处理菜单中找到直方图匹配功能，设置好`参考图像`、`匹配图像`、`输出路径`，点击开始计算，即可得到与参考图像色彩分布趋于一致的图像。
+## Histogram Matching
+- When using equipment to acquire the images of patients, some deviations may occur due to the setting of parameters. Users can rectify the color distribution of an image by providing a reference image with the "Histogram Matching" function.
+- Click "Histogram Matching" in the "Preprocessing" menu. After setting appropriate `Reference Image`, `Matching Image`, `Output Path`, click "Calculate." The processed image, which matches the reference image in color distribution, will be generated and saved in the output path.
 
 <center>
 

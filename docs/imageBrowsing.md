@@ -1,75 +1,75 @@
-# 阅片
+# Image Reading
 <center>
 
-![影像组学流程_图像采集](./imgs/pipeline_1.png)
+![process_of_radiomics_image_acquisition](./imgs/pipeline_1.png)
 
 </center>
 
-- 阅片功能是本软件的基础功能，包括对Dicom格式、Nifti格式图片的滚动浏览、移动、缩放、调节窗位、窗宽值显示等子功能。该部分功能，属于广义的图像采集过程。
+- Image reading is an essential function of this software. It supports standard medical image formats such as Dicom, Nifti, and so on. By reading the image, users can easily use the functions such as scrolling, moving, zooming, and adjusting the Window Width, Window Level. This also a part of the image acquisition process.
 
-## 支持打开多种格式
-![打开文件](./imgs/open_files.png)  
+## Multi-format Support
+![Open a file](./imgs/open_files.png)  
 
-- 目前版本（1.0.1），我们提供*.dcm、*.nii、*.nii.gz三种格式医学图像的打开，后期的版本中我们将支持更多格式的医学图像。相对于其他的一些软件，UltiamgeTK可以打开中文路径，为中文用户提供便捷。
+- The Image Reading function support three types of medical image, *.dcm, *.nii, and *.nii.gz in current version (1.0.1), and more formats will be supported in later versions. Compared with other similar softwares, you can customize the path containing Chinese, this is friendly to Chinese users.
 
-## 浏览方式
-- 使用鼠标滚轮可以上下翻看图片序列中的影像
-- 按住ctrl键滚动鼠标，可以对图像进行缩放查看
-- 按住ctrl键和鼠标左键可以拖动图片，对当前查看的图片进行位置调整，对于放大后的图片，该功能可以方便查看图片局部信息
-> UltimageTK的阅片方式完全参考Windows下的用户浏览图片习惯，鼠标和键盘的按键习惯也一贯沿用，不需要用户长时间的适应。
+## How to Read
+- Scroll up and down with the mouse wheel to browse the image in an image sequence.
+- Press Ctrl and scroll the mouse wheel to zoom in or zoom out the image.
+- Press Ctrl and drag the image with the mouse left-click button to adjust the viewpoint of an image. This function is convenient to view the area of interest in an image.
+> Read an image in UltimageTK is almost based on the user's browsing habits in Windows. Users can adapt to the way of using the mouse and keyboard in a short time.
 
-## 窗位窗宽
-- 设置窗位、窗宽值可以依据图像的物理值对图像显示的灰度值进行调整，为观测到不同身体部位下的不同成分提供便利
-- 在![](./imgs/window_level.png )处可以对图像的窗位窗宽进行调节
+## Window Width and Window Level
+- To observe different body parts clearly, you can adjust the value of grayscale by setting the values of window width and window level.
+- The values of window width and window level can be adjusted here. ![](./imgs/window_level.png )
 
-> - 窗宽： 指CT图像所显示的CT 值范围
-> - 窗位（窗中心）： 指窗宽范围内均值或中心值
+> - Window Width: The range of CT numbers included in the gray scale
+> - Window Level (the midpoint of a window): the CT number setting in Hounsfield units of the midpoint of the window width, which is the gray scale of the image. 
 
 ```
-CT等放射医学影像常有窗宽（Window Width,简写WW）窗位（Window Level,简写WL）的转换，比如窗宽400，窗位60，这代表什么意思呢？
-常规显示器的颜色位深是8bit，哪怕是彩色显示器，也是RGB每通道是8bit。而医学图像通常是10~12bit（通常用16bit的变量类型表示，比如 short 和 unsigned short ），因此即使不做窗宽窗位转换也需要将10~12bit的数据映射到8bit来显示（显示器是彩色，则灰度图像的话每通道颜色一样即可）
-医学图像中常有个骨窗、肺窗等的概念，即将具体的某个窗宽窗位的值来映射到8bit显示。 
-WW:400,WL:60举例：
-它表示将窗位是60，窗宽是400的像素映射到8bit来显示，即将像素范围是 -140 ~ 260 的像素映射到 0 ~ 255,毕竟原始像素范围可能是-1024~4096 这样的范围。
+Window Width (WW) and Window Level (WL) are often used in conversions of radiological images like CT. For example, WW: 400, WL: 60, what does it means?
+The color bit depth of a normal monitor is 8 bit or 8 bit per channel in (RGB). However, the bit depth of medical images is 10-12 bit (normally stored in the 16-bit variable, such as short or unsigned short). Therefore, mapping from 10-12 bit to 8 bit is necessary for display, even if WW and WL conversion are not performed (if the image is grayscale, just simply set all RGB channels with the same grayscale value).
+For example, Bone windows and lung windows in radiography are designed to mapping an image to 8 bit with certain WW and WL values for display on the monitor. 
+e.g. WW:400, WL:60:
+Mapping an image to 8 bit with WL=60 and WW=400 for display. The range of grayscale has been mapping from (-140 ~ 260) to (0 ~ 255), while the whole grayscale range of original image could be as huge as (-1024 ~ 4096).
 
     Min = WindowCenter — windowWidth/ 2
     Max = WindowCenter + windowWidth/ 2
 ```
 
-> 常见人体组织的CT值（HU）
+> The CT Values of Human Tissue（HU）
 <center>
 
-|**`组织`**       |   **`CT值`**        |     **`组织`**     |   **`CT值`** |
+|**`Tissue`**       |   **`CT Value`**        |     **`Tissue`**     |   **`CT Value`** |
 |:-:          |   :-:          |   :-:           |  :-:   |
-|骨组织     |   >400        |    肝脏       |     50～70|
-|钙值       |   80~300      |    脾脏       |    35～60|
-|血块       |   64~84       |    胰腺       |   30～55|
-|脑白质     |   25~34       |    肾脏       |   25～50|
-|脑灰质     |   28~44       |    肌肉       |   40～55|
-|脑脊液     |   3~8         |    胆囊       |   10～30|
-|血液       |   13~32       |    甲状腺     |  50～90|
-|血浆       |   3~14        |    脂肪       |  －20～－100|
-|渗出液     |   >15         |    水         |       0|
+|Bone     |   >400        |    Liver       |     50～70|
+|Calcification       |   80~300      |    Spleen       |    35～60|
+|Blood Clot       |   64~84       |    Pancreas       |   30～55|
+|White matter     |   25~34       |    Kidney       |   25～50|
+|Gray matter     |   28~44       |    Muscle       |   40～55|
+|Cerebrospinal fluid     |   3~8         |    Gallbladder       |   10～30|
+|Blood       |   13~32       |    Thyroid     |  50～90|
+|Plasma       |   3~14        |    Fat       |  －20～－100|
+|Exudates     |   >15         |    Water         |       0|
 
 </center>
 
-## 示例含义说明
+## Example Description
 <center>
 
 ![a](./imgs/read_single.png)
 
 </center>
 
-> - 左上角显示当前图像在序列中的位置
-> - 左下角为图像的比例尺
+> - The position of this image in the whole sequence is shown in the upper left corner.
+> - The scale of this image is shown in the bottom left corner.
 
-用户鼠标点下后可以查看当前位置的物理值（这里的value）![a](./imgs/pos_value.png)
-> 某物质的CT值等于该物质的衰减系数与水的衰减系数之差，再与水的衰减系数之比后乘以1000。即某物质CT值=1000×（u—u水）/ u水，其单位名称为 **`HU`**（Hounsfield Unit），可见CT值不是一个绝对值,而是一个相对值.不同组织的CT值各异,各自在一定范围内波动
+Left click on the image to see the physical value of this current position. ![a](./imgs/pos_value.png)
+> The CT value of a substance is equal to the difference between the attenuation coefficient of this substance and the attenuation coefficient of water. Then the ratio to the attenuation coefficient of water is multiplied by 1000. That is, the CT value of a substance=1000×(u-u<sub>water</sub>)/u<sub>water</sub>.The Unit of CT value is **`HU`** (Hounsfield Unit). The CT value is not an absolute value but a relative value. The CT values of different tissues are different, and each fluctuates within a specific range.
 
 
-## 窗口浏览方式
-用户可以使用默认的三个视图方式进行浏览，也可以点击每一个视图下的![a](./imgs/single_btn.png)按钮开启单视图（独占模式）浏览方式。
+## View Mode
+There are three view modes in the interface by default, and the single view mode (exclusive mode) can be turned on by clicking the button ![a](./imgs/single_btn.png) under each view.
 
-> - 冠状面（英文名： Coronal Plane）：是沿左，右方向将人体纵切为前后两部分的断面
-> - 矢状面（英文名： Sagittal Plane）：沿身体前后径所作的与地面垂直的切面，其中通过正中线的切面称正中面
-> - 横断面（英文名： Transverse Plane）：横断身体，与地面平行之切面，亦称水平面
+> - Coronal Plane: A vertical anatomical plane that divides the standing body into front and rear halves.
+> - Sagittal Plane: The front-to-back longitudinal vertical plane that divides the upright body into right and left halves.
+> - Transverse Plane: A plane parallel to the ground that divides the standing body into upper and lower portions.

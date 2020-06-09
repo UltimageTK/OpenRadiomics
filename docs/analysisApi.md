@@ -1,51 +1,52 @@
-# LRS数据结构介绍
+# Introduction to LRS Data Structure
 
-LRS结构是UltImageTK为了方便保存和读取已标注文件而定义一种格式。为了方便读写，我们只提供了读、写两个接口供使用。
+We defined a structure named LRS for UltImageTK to import and export the annotation data. Only two interfaces are provided, reading, and writing, for efficiency.
 
 
-- **LRS数据结构的命名空间为`LabelAnalysis`**
+- ** The namespace of the LRS data structure is `LabelAnalysis`**
 
-> ## 读文件
+> ## Read File
 ```C++
     /******************************************************** 
     *  @function : ReadLabelFile
-    *  @brief    : 读取pPath路径下的lrs文件
-    *  @input    : pPath 读路径
-    *  @output   : stAllLabelInfo LRS数据结构
-    *  @return   : bool 成功与否
+    *  @brief    : Read lrs file under pPath
+    *  @input    : pPath             The path where the file is stored
+    *  @output   : stAllLabelInfo    LRS data structure
+    *  @return   : bool              Success or not
     *********************************************************/
     EXPORTS_LABEL bool ReadLabelFile(char* pPath, AllLabelInfo &stAllLabelInfo);
 ```
 
-> ## 写文件
+> ## Write File
 ```C++
     /********************************************************
     *  @function : WriteLabelFile
-    *  @brief    : 往pPath路径写lrs文件
-    *  @input    : pPath 写路径
-    *  @input    : stAllLabelInfo LRS数据结构
-    *  @return   : bool 成功与否
+    *  @brief    : Write lrs file to pPath
+    *  @input    : pPath            The path where the file should be stored
+    *  @input    : stAllLabelInfo   LRS data structure
+    *  @return   : bool             Success or not
     *********************************************************/
     EXPORTS_LABEL bool WriteLabelFile(char* pPath, AllLabelInfo stAllLabelInfo);
 ```
 
-> ## 内部结构介绍
+> ## Introduction of Internal Structure
 
 > ### `AllLabelInfo`
 ```C++
     /******************************************************** 
     *  @struct  :  AllLabelInfo
-    *  @brief   :  一个文件或图像序列的所有信息
-    *  @details : 包含源图像文件的信息，已标注的标签信息，以及标注在各个视图面上的ROI信息
+    *  @brief   :  All information about a file or an image sequence
+    *  @details :  Contains information about the source image,
+    *              annotated tags, annotated ROI on each views
     *********************************************************/
     struct AllLabelInfo
     {
-        int     nCurVersion;    //本版
-        FileInfo    stFileInfo; //读取的文件信息
-        std::map<std::string,int>      mapLabelProperty;        //label的颜色和定义
-        std::map<int, std::map<int, Target>>     mapSPTargets;  //矢状面,帧号和目标列表
-        std::map<int, std::map<int,Target>>     mapCPTargets;  //冠状面,帧号和目标列表
-        std::map<int, std::map<int, Target>>     mapTPTargets;  //横断面,帧号和目标列表
+        int     nCurVersion;    // Current version No.
+        FileInfo    stFileInfo; // Information loaded
+        std::map<std::string,int>      mapLabelProperty;        //Color and definition of the label
+        std::map<int, std::map<int, Target>>     mapSPTargets;  //Frame No. and target list, sagittal plane
+        std::map<int, std::map<int,Target>>     mapCPTargets;  //Frame No. and target list, coronal plane
+        std::map<int, std::map<int, Target>>     mapTPTargets;  //Frame No. and target list, transverse plane
     };
 ```
 
@@ -53,20 +54,20 @@ LRS结构是UltImageTK为了方便保存和读取已标注文件而定义一种�
 ```C++
     /********************************************************
     *  @struct  :  FileInfo
-    *  @brief   :  源图像文件的信息
-    *  @details :  源文件中一些相对比较重要的信息
+    *  @brief   :  Information about the source image
+    *  @details :  Some important information in the source file
     *********************************************************/
     struct FileInfo
     {
-        std::string strFilePath;    //源文件路径，或文件夹路径
-        std::string strPatientName; //患者名
-        std::string strPatientAge;  //患者年龄
-        std::string strPatientSex;  //患者性别
-        int         nFileType;      //文件类型
-        int         nWidth;         //宽
-        int         nHeight;        //高
-        int         nThickness;     //层数
-        float       fSpacing;       //间隔比例
+        std::string strFilePath;    //The path of the source file or the folder
+        std::string strPatientName; //Patient's name
+        std::string strPatientAge;  //Patient's Age
+        std::string strPatientSex;  //Patient's gender
+        int         nFileType;      //Type of the file
+        int         nWidth;         //Width
+        int         nHeight;        //Height
+        int         nThickness;     //Thickness
+        float       fSpacing;       //Spacing
     };
 ```
 
@@ -74,16 +75,16 @@ LRS结构是UltImageTK为了方便保存和读取已标注文件而定义一种�
 ```C++
     /********************************************************
     *  @struct  :  Target
-    *  @brief   :  每一个目标的信息
-    *  @details :  标记好的每一个目标ROI的信息
+    *  @brief   :  Information about each target
+    *  @details :  Information about ROI of each target
     *********************************************************/
     struct Target
     {
-        std::string strTargetName;  //目标类型-标签值
-        std::string strTargetDisc;  //目标描述-标签描述
-        int         nTargetID;      //目标在当前视图当前层的ID
-        int         nTargetType;    //目标几何形状类型
-        std::list<Vertex> lstVertex;    //目标轮廓点集
+        std::string strTargetName;  //Type of the target - tag's value
+        std::string strTargetDisc;  //Description of the target - tag's description
+        int         nTargetID;      //ID of the target in the current layer of the current view 
+        int         nTargetType;    //Geometry type of the target
+        std::list<Vertex> lstVertex;    //Vertex list of the target
     };
 ```
 
@@ -91,13 +92,13 @@ LRS结构是UltImageTK为了方便保存和读取已标注文件而定义一种�
 ```C++
     /********************************************************
     *  @struct  :  Vertex
-    *  @brief   :  一个点的信息
-    *  @details :  一个点的位置和物理值（HU）
+    *  @brief   :  The information about one point
+    *  @details :  The position and CT value (HU) of one point
     *********************************************************/
     struct Vertex
     {
-        float fX;   //在当前视图下的x坐标
-        float fY;   //在当前视图下的y坐标
-        int   nValue;   //HU值
+        float fX;   //x Coordinate in current view
+        float fY;   //y Coordinate in current view
+        int   nValue;   //CT value (HU)
     };
 ```

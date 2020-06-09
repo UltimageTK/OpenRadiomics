@@ -1,14 +1,14 @@
-- **入门介绍**
-    - [介绍](/introduction)
-    - [阅片](/imageBrowsing)
-    - [预处理工具](/preProcessTools)
-- **影像组学**
-    - [图像分割](/imageSegmentation)
-    - [特征提取](/featureExtract)
-    - [特征选择](/featureSelect)
-    - [建立模型](/buildModel)
-- **知识库**
-    - [LRS数据结构介绍](/analysisApi)
-    - [影像组学基础](/radiomicsBasic)
-- **更新日志**
-    - [版本更新日志](/changeLog)
+- **Brief Introduction**
+    - [Introduction](/introduction)
+    - [Image Reading](/imageBrowsing)
+    - [Image Preprocessing Tools](/preProcessTools)
+- **Radiomics**
+    - [Image Segmentation](/imageSegmentation)
+    - [Feature Extraction](/featureExtract)
+    - [Feature Selection](/featureSelect)
+    - [Model Building](/buildModel)
+- **Knowledge Base**
+    - [Introduction to LRS Data Structure](/analysisApi)
+    - [Introduction to Radiomics](/radiomicsBasic)
+- **Update log**
+    - [Release Notes](/changeLog)

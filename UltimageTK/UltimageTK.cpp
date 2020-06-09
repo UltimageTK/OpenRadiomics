@@ -26,11 +26,70 @@
 #include "itkGDCMImageIOFactory.h"
 #include "itkNiftiImageIOFactory.h"
 #include "itkNRRDImageIOFactory.h"
+#include "Rebuild3D.h"
 
+
+#include <vtkRenderer.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include "vtkDICOMImageReader.h"
+#include "vtkPolyDataMapper.h"
+#include "vtkActor.h"
+#include "vtkOutlineFilter.h"
+#include "vtkCamera.h"
+#include "vtkProperty.h"
+#include "vtkPolyDataNormals.h"
+#include "vtkContourFilter.h"
+#include "vtkVolume16Reader.h"
+#include "vtkImageCast.h"
+#include "vtkImageReader.h"
+#include "vtkBMPReader.h"
+#include "vtkMarchingCubes.h"
+#include "vtkStripper.h"
+#include "vtkSmoothPolyDataFilter.h"
+#include "vtkDecimatePro.h"
+#include <vtkSmartPointer.h>
+#include <vtkInteractorStyle3D.h>
+#include <vtkCylinderSource.h>
+#include "vtkAutoInit.h" 
+#include "vtkImageViewer2.h"
+#include "vtkImageActor.h"
+#include "vtkImageMapper3D.h"
+#include "vtkCellArray.h"
+#include "vtkFloatArray.h"
+#include "vtkPointData.h"
+#include "vtkPoints.h"
+#include "vtkPolygon.h"
+#include "vtkPolyData.h"
+#include "vtkPolyDataMapper.h"
+#include "vtkUnstructuredGrid.h"
+#include "vtkVoxel.h"
+#include "vtkDataSetMapper.h"
+#include "vtkTriangle.h"
+#include "vtkTriangleFilter.h"
+#include "vtkImageFlip.h"
+#include "vtkImageViewer.h"
+#include "vtkImageMapToWindowLevelColors.h"
+#include "vtkGenericOpenGLRenderWindow.h"
+#include "vtkRenderWindowInteractor.h"
+#include "QVTKOpenGLWidget.h"
+#include "vtkImageShiftScale.h"
+#include "vtkFixedPointVolumeRayCastMapper.h"
+#include "vtkPiecewiseFunction.h"
+#include "vtkVolumeProperty.h"
+#include "vtkImageData.h"
+#include "vtkAxesActor.h"
+#include "vtkAutoInit.h"
 
 //用于执行Python的exe需要的头文件
 #include "windows.h"
 #include "shellapi.h"
+
+VTK_MODULE_INIT(vtkRenderingVolumeOpenGL2);
+VTK_MODULE_INIT(vtkRenderingOpenGL2); // VTK was built with vtkRenderingOpenGL2
+VTK_MODULE_INIT(vtkInteractionStyle);
+VTK_MODULE_INIT(vtkRenderingFreeType)
+
 
 /******************************************************** 
 *  @function : UltimageTK
@@ -43,6 +102,7 @@ UltimageTK::UltimageTK(QWidget *parent)
     : QMainWindow(parent)
     , m_dlgAbout(this)
 {
+    vtkObject::GlobalWarningDisplayOff();
     ui.setupUi(this);
     //this->setWindowTitle("UltimageTK v1.0.1");
 }
@@ -68,8 +128,11 @@ bool UltimageTK::init()
     ui.labelSagittalPlane->setVisible(false);
     ui.labelCoronalPlane->setVisible(false);
     ui.labelTransversePlane->setVisible(false);
+    ui.label3DPlane->setVisible(false);
     ui.pBtnMouse->setDisabled(true);
-    ui.widget9->setVisible(false);
+    //ui.widget3D->setVisible(false);
+    //ui.widget3D->setStyleSheet("{border:4px solid rgb(0,122,204);}");
+
     ui.widgetSagittalPlane->setViewPlane(SagittalPlane);
     ui.widgetCoronalPlane->setViewPlane(CoronalPlane);
     ui.widgetTransversePlane->setViewPlane(TransversePlane);
@@ -405,6 +468,11 @@ void UltimageTK::OnLoadFinish(bool bLoadSuccess)
     {
         ui.statusBar->showMessage(QString::fromLocal8Bit("Load failed."));
     }
+
+    //加载新的数据，清空3D数据
+    ui.vtkWidget->Clear3DWidget();
+
+
 }
 
 /******************************************************** 
@@ -620,7 +688,22 @@ void UltimageTK::OnWindowLevelChanged()
 *********************************************************/
 void UltimageTK::OnUpdate3DView()
 {
-    
+	LabelAnalysis::AllLabelInfo stAllLabelInfo;
+    if (ImageDataManager::getInstance()->getAllLabelInfo(stAllLabelInfo))
+    {
+        try
+        {
+            ui.vtkWidget->Display3D(stAllLabelInfo);
+        }
+        catch (...)
+        {
+            ui.vtkWidget->Clear3DWidget();
+        }
+    }
+    else
+    {
+        ui.vtkWidget->Clear3DWidget();
+    }
 }
 
 /******************************************************** 
@@ -658,6 +741,7 @@ void UltimageTK::OnPlaneAlone()
         {
             ui.widgetS->setVisible(false);
             ui.widgetC->setVisible(false);
+            ui.widget3D->setVisible(false);
             ui.pBtnCoronalPlaneAlone->setText(strExclusive);
             ui.pBtnTransversePlaneAlone->setText(strCancelExclusive);
             ui.pBtnSagittalPlaneAlone->setText(strExclusive);
@@ -666,6 +750,7 @@ void UltimageTK::OnPlaneAlone()
         {
             ui.widgetT->setVisible(false);
             ui.widgetC->setVisible(false);
+            ui.widget3D->setVisible(false);
             ui.pBtnCoronalPlaneAlone->setText(strExclusive);
             ui.pBtnTransversePlaneAlone->setText(strExclusive);
             ui.pBtnSagittalPlaneAlone->setText(strCancelExclusive);
@@ -674,9 +759,11 @@ void UltimageTK::OnPlaneAlone()
         {
             ui.widgetS->setVisible(false);
             ui.widgetT->setVisible(false);
+            ui.widget3D->setVisible(false);
             ui.pBtnCoronalPlaneAlone->setText(strCancelExclusive);
             ui.pBtnTransversePlaneAlone->setText(strExclusive);
             ui.pBtnSagittalPlaneAlone->setText(strExclusive);
+
         }
     }
     else
@@ -684,6 +771,7 @@ void UltimageTK::OnPlaneAlone()
         ui.widgetS->setVisible(true);
         ui.widgetT->setVisible(true);
         ui.widgetC->setVisible(true);
+        ui.widget3D->setVisible(true);
         ui.pBtnCoronalPlaneAlone->setText(strExclusive);
         ui.pBtnTransversePlaneAlone->setText(strExclusive);
         ui.pBtnSagittalPlaneAlone->setText(strExclusive);

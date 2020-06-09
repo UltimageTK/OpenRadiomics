@@ -345,6 +345,10 @@ void DrawPen::mouseMoveEvent(QMouseEvent *event, QPointF ptF, int nValue)
         ImageDataManager::getInstance()->updateLabelInfo(m_emPlane, m_nCurFrameIndex, m_mapTargets);
 
     }
+    else
+    {
+        m_ptCross = ptF;
+    }
 }
 
 /******************************************************** 
@@ -417,7 +421,7 @@ void DrawPen::DrawGraphics()
 {
     QList<ExLineF> lstWTargets;
     QList<ExLineF> lstHTargets;
-    ImageDataManager::getInstance()->getOtherPlaneTargetWH(m_emPlane, lstWTargets, lstHTargets);
+    ImageDataManager::getInstance()->getOtherPlaneTargetWH(m_emPlane, lstWTargets, lstHTargets, m_nCurFrameIndex);
 
     QPainter painter;
     QTime atime;
@@ -595,7 +599,7 @@ void DrawPen::drawLayer(QPainter *p, QPointF pt1, QPointF pt2)
     float fSpacing = m_stImageHeaderInfo.fPixelSpacingT/ m_stImageHeaderInfo.fPixelSpacingW;
 
     //∫·œﬂ
-    if (pt1.x()==pt2.x())
+    if (abs(pt1.x()-pt2.x())<0.000001)
     {
         QPoint ptTopLeft = QPoint(round(pt1.rx()*m_pImgDrawing->width()), round(pt1.ry()*m_pImgDrawing->height()));
         QPoint ptBottomRight = QPoint(round(pt2.rx()*m_pImgDrawing->width() + m_fZoom), round(pt2.ry()*m_pImgDrawing->height()));
@@ -615,7 +619,7 @@ void DrawPen::drawLayer(QPainter *p, QPointF pt1, QPointF pt2)
         rect.setBottomRight(ptBottomRight);
     }
     // ˙œﬂ
-    else if (pt1.y() == pt2.y())
+    else if (abs(pt1.y() - pt2.y()) < 0.000001)
     {
         QPoint ptTopLeft = QPoint(round(pt1.rx()*m_pImgDrawing->width()), round(pt1.ry()*m_pImgDrawing->height()));
         QPoint ptBottomRight = QPoint(round(pt2.rx()*m_pImgDrawing->width()), round(pt2.ry()*m_pImgDrawing->height() + m_fZoom));

@@ -18,10 +18,10 @@
 
 <body>
 
-  <!-- <nav> 
+  <nav> 
     <a href="#/">EN</a>
     <a href="#/zh-cn/">中文</a>
-  </nav> -->
+  </nav>
 
   <div id="app"></div>
   <script>
@@ -61,12 +61,14 @@
 
         // 支持本地化
         placeholder: {
-          '/': '搜索'
+          '/zh-cn/': '搜索',
+          '/': 'Type to search'
         },
 
         // 支持本地化
         noData: {
-          '/': '找不到结果'
+          '/zh-cn/': '找不到结果',
+          '/': 'No result'
         },
 
         // 搜索标题的最大程级, 1 - 6
